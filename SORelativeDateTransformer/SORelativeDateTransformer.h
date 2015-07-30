@@ -27,6 +27,13 @@
 
 #import <Foundation/Foundation.h>
 
+//! Project version number for SORelativeDateTransformer.
+FOUNDATION_EXPORT double SORelativeDateTransformerVersionNumber;
+
+//! Project version string for SORelativeDateTransformer.
+FOUNDATION_EXPORT const unsigned char SORelativeDateTransformerVersionString[];
+
+
 @interface SORelativeDateTransformer : NSValueTransformer
 {
 	NSCalendar *__calendar;
