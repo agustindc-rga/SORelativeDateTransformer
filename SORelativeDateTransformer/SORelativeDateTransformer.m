@@ -41,8 +41,8 @@ static inline NSString *SORelativeDateLocalizedString(NSString *key, NSString *c
     [__calendar retain];
 #endif
     
-    __unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    __dateComponentSelectorNames =  [[NSArray alloc] initWithObjects:@"year", @"month", @"week", @"day", @"hour", @"minute", @"second", nil];
+    __unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekOfYear | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    __dateComponentSelectorNames = @[@"year", @"month", @"weekOfYear", @"day", @"hour", @"minute", @"second"];
 	
 	return self;
 }
