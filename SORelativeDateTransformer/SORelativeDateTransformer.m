@@ -28,8 +28,7 @@
     static NSBundle *bundle = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSBundle *bundle = [NSBundle bundleForClass:self];
-        NSURL *url = [bundle URLForResource:@"SORelativeDateTransformer" withExtension:@"bundle"];
+        NSURL *url = [[NSBundle bundleForClass:self] URLForResource:@"SORelativeDateTransformer" withExtension:@"bundle"];
         bundle = [[NSBundle alloc] initWithURL:url];
     });
     return bundle;
