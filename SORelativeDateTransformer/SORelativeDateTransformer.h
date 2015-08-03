@@ -35,11 +35,6 @@ FOUNDATION_EXPORT const unsigned char SORelativeDateTransformerVersionString[];
 
 
 @interface SORelativeDateTransformer : NSValueTransformer
-{
-	NSCalendar *__calendar;
-	NSUInteger __unitFlags;
-	NSArray *__dateComponentSelectorNames;
-}
 
 /**
  @brief The cached instance of the value transformer registered with NSValueTransformer's global cache.

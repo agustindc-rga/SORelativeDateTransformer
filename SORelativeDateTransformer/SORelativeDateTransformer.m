@@ -8,6 +8,15 @@
 
 #import "SORelativeDateTransformer.h"
 
+@interface SORelativeDateTransformer ()
+{
+    NSCalendar *__calendar;
+    NSUInteger __unitFlags;
+    NSArray *__dateComponentSelectorNames;
+}
+
+@end
+
 @implementation SORelativeDateTransformer
 
 + (NSValueTransformer *) registeredTransformer
@@ -36,25 +45,12 @@ static inline NSString *SORelativeDateLocalizedString(NSString *key, NSString *c
 	if (!self) return nil;
     
     __calendar = [NSCalendar autoupdatingCurrentCalendar];
-
-#if !__has_feature(objc_arc)
-    [__calendar retain];
-#endif
     
     __unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekOfYear | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     __dateComponentSelectorNames = @[@"year", @"month", @"weekOfYear", @"day", @"hour", @"minute", @"second"];
 	
 	return self;
 }
-
-#if !__has_feature(objc_arc)
-- (void) dealloc
-{
-	[__calendar release];
-	[__dateComponentSelectorNames release];
-	[super dealloc];
-}
-#endif
 
 #pragma mark - NSValueTransformer Overrides
 
@@ -72,7 +68,7 @@ static inline NSString *SORelativeDateLocalizedString(NSString *key, NSString *c
 - (id) transformedValue:(id)value
 {
 	// Return early if input is whacked
-	if ([value isKindOfClass:[NSDate class]] == NO) {
+	if (![value isKindOfClass:[NSDate class]]) {
 		return SORelativeDateLocalizedString(@"now", @"label for current date-time");
 	}
 	
@@ -104,7 +100,8 @@ static inline NSString *SORelativeDateLocalizedString(NSString *key, NSString *c
 		
 		// If the relative difference between the input date and now is 0 for the date component named in this iteration, press on.
 		// e.g. no difference between the month component of input date and now, continue iterating with the week component next to be evaluated.
-		if (relativeDifference == 0) continue;
+		if (relativeDifference == 0) 
+            continue;
         
 		// Lookup the localized name to use for the data component in our class' strings file.
 		NSString *localizedDateComponentName = nil;
