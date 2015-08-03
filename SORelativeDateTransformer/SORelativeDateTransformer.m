@@ -66,6 +66,11 @@ static inline NSString *SORelativeDateLocalizedString(NSString *key, NSString *c
 
 - (id) transformedValue:(id)value
 {
+    return [self transformedValue:value referenceValue:[NSDate date]];
+}
+
+- (id) transformedValue:(id)value referenceValue:(id)referenceValue
+{
 	// Return early if input is whacked
 	if (![value isKindOfClass:[NSDate class]]) {
 		return SORelativeDateLocalizedString(@"now", @"label for current date-time");
@@ -75,7 +80,7 @@ static inline NSString *SORelativeDateLocalizedString(NSString *key, NSString *c
 	
 	// Obtain the date components for the relative difference between the input date and now.
 	
-	NSDateComponents *relativeDifferenceComponents = [__calendar components:__unitFlags fromDate:value toDate:[NSDate date] options:0];
+	NSDateComponents *relativeDifferenceComponents = [__calendar components:__unitFlags fromDate:value toDate:referenceValue options:0];
 	
 	// Iterate the array of NSDateComponent selectors, which are sorted in decreasing order of time span: year, month, day, etc.
 	// For the first NSDateComponent time span method that returns a reasonable non-zero value, use that value to compute the relative-to-now date phrase string.
